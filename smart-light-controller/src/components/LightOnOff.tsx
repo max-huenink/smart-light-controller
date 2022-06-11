@@ -4,10 +4,17 @@ import { Power } from 'react-bootstrap-icons';
 import OnOffTrait from '../models/traits/OnOffTrait';
 
 export default function LightOnOff({ On }: OnOffTrait) {
+  const [on, setOn] = useState<boolean>(On);
+
+  const toggle = useCallback(() => {
+    setOn(o => !o);
+    console.log('on off toggled');
+  }, []);
+
   return (<>
-    <Button variant={On ? 'success' : 'danger'}>
+    <Button variant={on ? 'success' : 'danger'} onClick={toggle}>
       <Power />
     </Button>
-    {On ? "On" : "Off"}
+    {on ? "On" : "Off"}
   </>);
 }

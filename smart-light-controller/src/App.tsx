@@ -1,12 +1,15 @@
 import './App.css';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import Home from './components/Home';
+import NavMenu from './components/NavMenu';
 
 function App() {
-  return (
+  return (<>
+    <NavMenu />
     <Container>
       <Home />
     </Container>
+  </>
   );
 }
 
