@@ -1,5 +1,3 @@
-import Trait from "./Trait";
-
-export default interface OnOffTrait extends Trait {
+export default interface OnOffTrait {
   On: boolean,
 }

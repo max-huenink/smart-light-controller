@@ -28,13 +28,15 @@ export default function Home() {
     // }));
   }, [publishDeviceConfig]);
 
+  // only needed for testing
+  // /*
   const addDevice = useCallback((device: DeviceModel) => {
     setDeviceStates(d => {
       const temp = { ...d };
       temp[device.Name] = <SmartLight device={device} configCallback={publishDeviceConfig} />;
       return temp;
     })
-  }, []);
+  }, [publishDeviceConfig]);
 
   useEffect(() => {
     const device: DeviceModel = {
@@ -42,9 +44,9 @@ export default function Home() {
       State: {
         Brightness: 100,
         Color: {
-          red: 255,
-          green: 100,
-          blue: 200,
+          r: 255,
+          g: 100,
+          b: 200,
         },
         On: true,
         WakeModeOn: false
@@ -59,9 +61,9 @@ export default function Home() {
       State: {
         Brightness: 200,
         Color: {
-          red: 255,
-          green: 100,
-          blue: 200,
+          r: 255,
+          g: 100,
+          b: 200,
         },
         On: false,
         WakeModeOn: false
@@ -70,6 +72,7 @@ export default function Home() {
     }
     addDevice(device);
   }, [addDevice]);
+  // */
 
   // Client connected; subscribe to topics, and publish to ping topic
   useEffect(() => {
@@ -78,7 +81,7 @@ export default function Home() {
 
       client.on('message', (topic, msgBuf) => {
         // Dispact to callback
-        if (topic.match(/smartLights\/\w*\/state/)) {
+        if (topic.match(/smartLights\/[^\/]*\/state/)) {
           const msg = msgBuf.toString();
           const device: DeviceModel = JSON.parse(msg);
           setDeviceStates(d => {

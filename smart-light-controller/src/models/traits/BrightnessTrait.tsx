@@ -1,5 +1,3 @@
-import Trait from "./Trait";
-
-export default interface BrightnessTrait extends Trait {
+export default interface BrightnessTrait {
   Brightness: number,
 }

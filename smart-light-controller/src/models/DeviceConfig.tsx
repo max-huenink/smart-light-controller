@@ -1,6 +1,8 @@
+import ColorTrait from "./traits/ColorTrait";
+
 type DeviceConfig = {
   LightOn: boolean,
-  Color: { red: number, green: number, blue: number },
+  Color: ColorTrait,
   Brightness: number,
   WakeMode: boolean,
 };

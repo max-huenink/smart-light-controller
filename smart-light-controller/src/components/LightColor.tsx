@@ -1,17 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
 import { RgbColorPicker } from 'react-colorful';
+import LiftStateUp from '../models/LiftStateUp';
 import ColorTrait from '../models/traits/ColorTrait';
 
-export default function LightColor({ Color }: ColorTrait) {
-  const [color, setColor] = useState({ r: Color.red, g: Color.green, b: Color.blue });
-
-  // TODO look into debounce instead
-  const handle = useCallback(() => {
-    console.log('new color is');
-    console.log(color)
-  }, [color])
-
+export default function LightColor({ value, setValue }: LiftStateUp<ColorTrait>) {
   return (<div>
-    <RgbColorPicker color={color} onChange={setColor} onPointerUp={handle} />
+    <h3>Color</h3>
+    <RgbColorPicker color={value} onChange={setValue} />
   </div>);
 }

@@ -1,20 +1,14 @@
-import { useState, useEffect, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { Power } from 'react-bootstrap-icons';
-import OnOffTrait from '../models/traits/OnOffTrait';
+import ToggleState from '../models/ToggleState';
 
-export default function LightOnOff({ On }: OnOffTrait) {
-  const [on, setOn] = useState<boolean>(On);
-
-  const toggle = useCallback(() => {
-    setOn(o => !o);
-    console.log('on off toggled');
-  }, []);
-
+export default function LightOnOff({ value, toggle }: ToggleState) {
   return (<>
-    <Button variant={on ? 'success' : 'danger'} onClick={toggle}>
+    <h3>
+      {value ? "On" : "Off"}
+    </h3>
+    <Button variant={value ? 'success' : 'danger'} onClick={toggle}>
       <Power />
     </Button>
-    {on ? "On" : "Off"}
   </>);
 }
