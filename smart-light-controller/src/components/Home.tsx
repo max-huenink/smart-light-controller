@@ -1,35 +1,27 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import mqtt, { MqttClient } from 'mqtt';
-// import 'dotenv';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DeviceModel from '../models/DeviceModel';
 import SmartLight from './SmartLight';
 import DeviceConfig from '../models/DeviceConfig';
-import PossibleDeviceTraits from '../models/PossibleDeviceTraits';
+import { Buffer } from 'buffer';
 
 export default function Home() {
-  const [client, setClient] = useState<MqttClient>();
   const [deviceStates, setDeviceStates] = useState<{ [deviceName: string]: React.ReactElement }>({});
 
   const publishDeviceConfig = useCallback((deviceName: string, config: DeviceConfig) => {
-    if (client && client?.connected) {
-      client.publish(`smartLights/${deviceName}/config`, JSON.stringify(config));
-    }
-  }, [client]);
+    //   if (client && client?.connected) {
+    //     client.publish(`smartLights/${deviceName}/config`, JSON.stringify(config));
+    //   }
+    // }, [client]);
+  }, []);
 
   // Setup client, connect to broker
   useEffect(() => {
-    // setClient(mqtt.connect(process.env.BROKER_URL ?? '', {
-    //   properties: {
-    //     authenticationMethod: 'psk',
-    //     authenticationData: Buffer.from(process.env.PSK ?? '', 'utf-8'),
-    //   },
-    // }));
   }, [publishDeviceConfig]);
 
   // only needed for testing
-  // /*
+  /*
   const addDevice = useCallback((device: DeviceModel) => {
     setDeviceStates(d => {
       const temp = { ...d };
@@ -72,32 +64,38 @@ export default function Home() {
     }
     addDevice(device);
   }, [addDevice]);
-  // */
+  */
 
   // Client connected; subscribe to topics, and publish to ping topic
   useEffect(() => {
-    if (client && client.connected) {
-      client.subscribe('smartLights/+/state');
+    // if (client && client.connected) {
+    //   console.log('connected!')
+    //   client.subscribe('smartLights/+/state');
 
-      client.on('message', (topic, msgBuf) => {
-        // Dispact to callback
-        if (topic.match(/smartLights\/[^\/]*\/state/)) {
-          const msg = msgBuf.toString();
-          const device: DeviceModel = JSON.parse(msg);
-          setDeviceStates(d => {
-            const temp = { ...d };
-            temp[device.Name] = <SmartLight device={device} configCallback={publishDeviceConfig} />;
-            return temp;
-          })
-        }
-      })
+    //   client.on('message', (topic, msgBuf) => {
+    //     const msg = msgBuf.toString();
+    //     console.log(`received message from ${topic}: ${msg}`)
+    //     // Dispact to callback
+    //     if (topic.match(/smartLights\/[^/]*\/state/)) {
+    //       const device: DeviceModel = JSON.parse(msg);
+    //       setDeviceStates(d => {
+    //         const temp = { ...d };
+    //         temp[device.Name] = <SmartLight device={device} configCallback={publishDeviceConfig} />;
+    //         return temp;
+    //       })
+    //     }
+    //   })
 
-      client.publish('smartLights/+/ping', JSON.stringify({
-        getState: true,
-        getTraits: true,
-      }));
-    }
-  }, [client, publishDeviceConfig]);
+    // const lights = process.env.REACT_APP_LIGHTS?.split(',');
+    // lights?.forEach(light => {
+    // client.publish(`smartLights/${light}/ping`, JSON.stringify({
+    //   getState: true,
+    //   getTraits: true,
+    // }));
+    // })
+    // }
+    // }, [client, publishDeviceConfig]);
+  }, [publishDeviceConfig]);
 
   return <>
     <Row xs={1} md={2} lg={2} className="g-4">
