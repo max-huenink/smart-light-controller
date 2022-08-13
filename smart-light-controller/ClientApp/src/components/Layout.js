@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { NavMenu } from './NavMenu';
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import NavMenu from './NavMenu';
 
-export class Layout extends Component {
-  static displayName = Layout.name;
-
-  render () {
+export default function Layout() {
     return (
       <div>
         <NavMenu />
@@ -14,5 +11,4 @@ export class Layout extends Component {
         </Container>
       </div>
     );
-  }
 }
