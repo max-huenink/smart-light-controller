@@ -1,21 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
-namespace web_backend.Hubs
+namespace Backend.Controllers
 {
-    public class WeatherForecastHub : Hub
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
 
-        public WeatherForecastHub()
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
+            _logger = logger;
         }
 
-        public async Task NewMessage(long username, string message) => await Clients.All.SendAsync("messageReceived", username, message);
-
+        [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

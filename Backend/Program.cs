@@ -1,4 +1,4 @@
-using web_backend.Hubs;
+using Backend.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
