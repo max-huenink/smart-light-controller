@@ -1,4 +1,4 @@
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { Sun } from 'react-bootstrap-icons';
 import ToggleState from '../models/ToggleState';
 

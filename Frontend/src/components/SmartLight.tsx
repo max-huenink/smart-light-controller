@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
-import { Card, } from 'react-bootstrap';
+import React, { useState, useEffect, useMemo } from 'react';
+import Card from 'react-bootstrap/Card';
 import debounce from 'lodash.debounce';
 import DeviceModel from '../models/DeviceModel';
 import DeviceConfig from '../models/DeviceConfig';
@@ -20,9 +20,11 @@ export default function SmartLight({ device, configCallback }: SmartLightProps) 
   const [color, setColor] = useState(device.State.Color);
   const [wakeMode, setWakeMode] = useState(device.State.WakeModeOn);
 
-  const debounceConfig = useMemo(() => debounce((config: DeviceConfig) => {
-    configCallback(device.Name, config);
-  }, 1000), [])
+  const deviceName = useMemo(() => device.Name, [device.Name]);
+
+  const debounceConfig = useMemo(() => debounce((name: string, config: DeviceConfig) => {
+    configCallback(name, config);
+  }, 1000), [configCallback])
 
   useEffect(() => {
     const config: DeviceConfig = {
@@ -31,8 +33,8 @@ export default function SmartLight({ device, configCallback }: SmartLightProps) 
       Color: color,
       WakeMode: wakeMode,
     };
-    debounceConfig(config);
-  }, [on, brightness, color, wakeMode, debounceConfig])
+    debounceConfig(deviceName, config);
+  }, [on, brightness, color, wakeMode, deviceName, debounceConfig])
 
 
   const onOffComponent = useMemo(() => {

@@ -1,4 +1,8 @@
 .vs/
+obj/
+bin/
+[dD]ebug/
+[rR]elease/
 
 # Logs
 logs

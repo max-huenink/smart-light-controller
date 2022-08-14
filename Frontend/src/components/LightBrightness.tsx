@@ -1,3 +1,4 @@
+import * as React from 'react';
 import LiftStateUp from '../models/LiftStateUp';
 
 export default function LightBrightness({ value, setValue }: LiftStateUp<number>) {
