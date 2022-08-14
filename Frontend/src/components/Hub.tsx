@@ -3,7 +3,7 @@ import { HttpTransportType, HubConnectionBuilder, LogLevel } from "@microsoft/si
 import { Button } from 'react-bootstrap';
 
 type Forecast = {
-  date: Date,
+  date: string,
   temperatureC: number,
   temperatureF: number,
   summary?: string,
@@ -15,10 +15,11 @@ export default function Hub() {
 
   useEffect(() => {
     setConnection(new HubConnectionBuilder()
-      .withUrl("/hub/weatherforecast", {
-        logger: LogLevel.Trace,
-        transport: HttpTransportType.WebSockets,
-        skipNegotiation: true,
+      .withUrl(`/hub/test`, {
+        //logger: LogLevel.Trace,
+        //logMessageContent: true,
+        //transport: HttpTransportType.WebSockets,
+        //skipNegotiation: true,
       })
       .withAutomaticReconnect()
       .build()
@@ -35,6 +36,9 @@ export default function Hub() {
             console.log(`Received message from ${username}: ${message}`);
           })
         })
+        .catch(ex => {
+          console.log(`Exception caught when trying to start connection: ${ex}`);
+        })
       return () => {
         console.log("Disconnecting...");
         connection.stop();
@@ -44,7 +48,7 @@ export default function Hub() {
 
   const send = useCallback(() => {
     if (connection) {
-      connection.send("newMessage", "max", "test message!");
+      connection.send("NewMessage", 112345, "test message!");
     }
   }, [connection]);
 
@@ -71,7 +75,7 @@ export default function Hub() {
         {forecast.map(f => {
           return (
             <tr key={f.id}>
-              <td>{f.date.toDateString()}</td>
+              <td>{new Date(Date.parse(f.date)).toDateString()}</td>
               <td>{f.temperatureC}</td>
               <td>{f.temperatureF}</td>
               <td>{f.summary}</td>
