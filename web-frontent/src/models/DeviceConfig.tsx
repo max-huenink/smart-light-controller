@@ -1,9 +1,7 @@
+import BrightnessTrait from "./traits/BrightnessTrait";
 import ColorTrait from "./traits/ColorTrait";
+import OnOffTrait from "./traits/OnOffTrait";
+import WakeModeTrait from "./traits/WakeModeTrait";
 
-type DeviceConfig = {
-  LightOn: boolean,
-  Color: ColorTrait,
-  Brightness: number,
-  WakeMode: boolean,
+export default interface DeviceConfig extends BrightnessTrait, OnOffTrait, WakeModeTrait, ColorTrait {
 };
-export default DeviceConfig;

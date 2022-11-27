@@ -15,7 +15,7 @@ interface SmartLightProps {
 }
 
 export default function SmartLight({ device, configCallback }: SmartLightProps) {
-  const [on, setOn] = useState(device.State.On);
+  const [on, setOn] = useState(device.State.LightOn);
   const [brightness, setBrightness] = useState(device.State.Brightness);
   const [color, setColor] = useState(device.State.Color);
   const [wakeMode, setWakeMode] = useState(device.State.WakeModeOn);
@@ -31,7 +31,7 @@ export default function SmartLight({ device, configCallback }: SmartLightProps) 
       LightOn: on,
       Brightness: brightness,
       Color: color,
-      WakeMode: wakeMode,
+      WakeModeOn: wakeMode,
     };
     debounceConfig(deviceName, config);
   }, [on, brightness, color, wakeMode, deviceName, debounceConfig])

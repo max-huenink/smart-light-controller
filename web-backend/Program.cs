@@ -1,4 +1,6 @@
 using web_backend.Hubs;
+using MediatR;
+using web_backend;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+builder.Services.AddMediatR(typeof(WeatherForecast).Assembly);
 
 var app = builder.Build();
 

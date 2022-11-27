@@ -1,5 +1,8 @@
 export default interface ColorTrait {
-  r: number,
-  g: number,
-  b: number
+  Color: RGB,
+}
+export interface RGB {
+  Red: number,
+  Green: number,
+  Blue: number,
 }
